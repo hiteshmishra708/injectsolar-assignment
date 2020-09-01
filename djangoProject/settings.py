@@ -25,7 +25,7 @@ SECRET_KEY = 'r8ka_!!w^+6$_h7_+@ma%hq3osl)f&opb7&3ln9r+1&(e)@j2q'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [aqueous-meadow-39012.herokuapp.com]
+ALLOWED_HOSTS = ['aqueous-meadow-39012.herokuapp.com']
 
 
 # Application definition
