@@ -18,7 +18,7 @@ def index(request):
     un_cleared_logs = UnClearedLogs.objects.order_by('id')
     form = toDoForm()
     context = {'ClearedLogs': cleared_logs, 'un_cleared_logs': un_cleared_logs, 'form': form}
-    return render(request,'todo/index.html',context)
+    return render(request,'core/index.html',context)
 
 def get_next_page_data(count):
     data = []
