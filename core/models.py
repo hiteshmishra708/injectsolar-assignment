@@ -8,7 +8,6 @@ class ClearedLogs(models.Model):
     inverter_name = models.CharField(max_length=120)
     alarm = models.CharField(max_length=120)
     occurance_time = models.CharField(max_length=120)
-    clearance_time = models.CharField(max_length=120)
     message = models.CharField(max_length=500)
 
 class UnClearedLogs(models.Model):
