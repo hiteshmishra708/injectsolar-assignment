@@ -17,10 +17,10 @@ def index(request):
     cleared_logs = ClearedLogs.objects.order_by('id')
     un_cleared_logs = UnClearedLogs.objects.order_by('id')
     form = toDoForm()
-    context = {'ClearedLogs': cleared_logs, 'un_cleared_logs': un_cleared_logs, 'form': form}
+    context = {'cleared_logs': cleared_logs, 'un_cleared_logs': un_cleared_logs, 'form': form}
     return render(request,'core/index.html',context)
 
-def get_next_page_data(count):
+def get_next_page_data(driver, count):
     data = []
     try:
         xpath = '/html/body/app-root/app-inject-solar/div/div[2]/div[2]/div/app-errore-log/div/div/div[2]/div/div/div/ngb-pagination/ul/li[' + str(count) + ']'
@@ -65,7 +65,7 @@ def refresh(request):
     time.sleep(10)
 
     driver.find_element_by_id('mat-input-3').send_keys('1/1/2020')
-    driver.find_element_by_id('mat-input-4').send_keys('1/26/2020')
+    driver.find_element_by_id('mat-input-4').send_keys('2/29/2020')
     driver.find_element_by_xpath('/html/body/app-root/app-inject-solar/div/div[2]/div[2]/div/app-errore-log/div/div/div[2]/div/div/form/div/div[3]/button[1]').click()
     time.sleep(10)
 
@@ -79,16 +79,17 @@ def refresh(request):
     data.pop(0)
     count = 4
     while True:
-        n_data = get_next_page_data(count)
+        n_data = get_next_page_data(driver, count)
         if len(n_data) > 0:
             data = data + n_data
             count = count + 1
         else:
             break
     print(data)
+    ClearedLogs.objects.all().delete()
     UnClearedLogs.objects.all().delete()
     for i in data:
-        log = UnClearedLogs.objects.create()
+        log = ClearedLogs.objects.create()
         log.device = i[0]
         log.inverter_name = i[1]
         log.alarm = i[2]
